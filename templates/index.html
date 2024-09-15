@@ -1,1 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input, select, button {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>House Price Prediction</h1>
+        <form action="/" method="POST">
+            <label for="area">Area:</label>
+            <input type="number" name="area" required>
 
+            <label for="bedrooms">Bedrooms:</label>
+            <input type="number" name="bedrooms" required>
+
+            <label for="bathrooms">Bathrooms:</label>
+            <input type="number" name="bathrooms" required>
+
+            <label for="stories">Stories:</label>
+            <input type="number" name="stories" required>
+
+            <label for="mainroad">Main Road (1 for Yes, 0 for No):</label>
+            <input type="number" name="mainroad" required>
+
+            <label for="guestroom">Guest Room (1 for Yes, 0 for No):</label>
+            <input type="number" name="guestroom" required>
+
+            <label for="basement">Basement (1 for Yes, 0 for No):</label>
+            <input type="number" name="basement" required>
+
+            <label for="hotwaterheating">Hot Water Heating (1 for Yes, 0 for No):</label>
+            <input type="number" name="hotwaterheating" required>
+
+            <label for="airconditioning">Air Conditioning (1 for Yes, 0 for No):</label>
+            <input type="number" name="airconditioning" required>
+
+            <label for="parking">Parking Spaces:</label>
+            <input type="number" name="parking" required>
+
+            <label for="prefarea">Preferred Area (1 for Yes, 0 for No):</label>
+            <input type="number" name="prefarea" required>
+
+            <label for="furnishingstatus">Furnishing Status (0: Furnished, 1: Semi-furnished, 2: Unfurnished):</label>
+            <input type="number" name="furnishingstatus" required>
+
+            <button type="submit">Predict Price</button>
+        </form>
+
+        <!-- Display the predicted price here -->
+        {% if predicted_price %}
+        <div class="result">
+            <strong>Predicted Price: </strong> {{ predicted_price }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
