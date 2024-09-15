@@ -1,0 +1,62 @@
+name: CI/CD Pipeline
+
+# Trigger workflow on push or pull request events on specific branches
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - stage
+  pull_request:
+    branches:
+      - main
+      - dev
+      - stage
+
+jobs:
+  # Define the job to test the code
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up Python 3.8 environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      # Install dependencies from requirements.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # Run linting to check code quality
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          flake8 --ignore=E501,E231 .
+
+      # Run tests (replace 'test.py' with the path to your test file)
+      - name: Run unit tests
+        run: |
+          pytest test.py
+
+  # Define the deployment job for Vercel
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test  # Ensure tests pass before deployment
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to Vercel
+        run: |
+          npm i -g vercel  # Install Vercel CLI
+          vercel --token ${{ secrets.VERCEL_TOKEN }} --prod  # Deploy to production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Use Vercel token from GitHub Secrets
